@@ -25,6 +25,7 @@
   "homepage": "https://github.com/FengchiW/Chemtoy#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "paper": "^0.12.4",
     "socket.io": "^2.3.0"
   }
 }

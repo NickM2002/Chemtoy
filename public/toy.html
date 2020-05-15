@@ -7,6 +7,8 @@
         <meta name="author" content="" />
         <title>ChemToy - Home</title>
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.2/paper-full.min.js"></script>
+        <script type="text/paperscript" src="js/BondingExample.js" canvas="mainctx"></script>
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -30,15 +32,9 @@
             </div>
         </nav>
         <!-- Masthead-->
-        <header class="masthead">
-            <div class="container d-flex h-100 align-items-center">
-                <div class="mx-auto text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">ChemToy</h1>
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Version 0.01 Beta - An Educational Organic Chemistry Simulator</h2>
-                    <a class="btn btn-primary js-scroll-trigger" href="#about">Try it out Now</a>
-                </div>
-            </div>
-        </header>
+        <div class="container d-flex h-100 align-items-center">
+            <canvas id="mainctx"  width="800" height="600" resize/>
+        </div>
         <!-- Footer-->
         <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © ChemToy 2020</div></footer>
         <!-- Bootstrap core JS-->
