@@ -29,6 +29,10 @@ app.get('*', function(req, res) {
     res.status(404).sendFile(__dirname + '/public/404.html');
 });
 
+app.get('/team/wilson', function(req, res) {
+    res.sendFile(__dirname + '/public/team/index.html');
+});
+
 http.createServer(httpApp).listen(httpApp.get('port'), function() {
     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
 });
