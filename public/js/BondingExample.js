@@ -1,67 +1,45 @@
 // Ported from original Metaball script by SATO Hiroyuki
 // http://park12.wakwak.com/~shp/lc/et/en_aics_script.html
-
 project.currentStyle = {
 	fillColor: 'black'
 };
 
-// Background
 var rect = new Path.Rectangle({
     point: [0, 0],
-    size: [window.innerWidth, window.innerHeight],
-    fillColor: '#bebdb8',
+    size: [view.size.width, view.size.height],
+    strokeColor: 'white',
     selected: true
 });
-
 rect.sendToBack();
+rect.fillColor = '#bebdb8';
 
+var ballPositions = [[255, 129], [610, 73], [486, 363],
+	[117, 459], [484, 726], [843, 306], [789, 615], [1049, 82],
+	[1292, 428], [1117, 733], [1352, 86], [92, 798]];
 
-// Carbon atom
-
+var handle_len_rate = 2.4;
 var circlePaths = [];
-
-var largeCircle = new Path.Circle({
-    center: [676, 433],
-    fillColor: 'black',
-	radius: 70
-});
-
-circlePaths.push(largeCircle);
-
-
-function onMouseMove(event) {
-	largeCircle.position = event.point;
-	largeCircle.bringToFront()
-	generateConnections(circlePaths);
-}
-
-function onMouseDown(event) {
-	var distances = []
-	for (var i = 0, l = circlePaths.length; i < l; i++) {
-			var d = Math.round(event.point.getDistance(circlePaths[i].position))
-			if(d < 300 && d != 0){
-				distances.push(d)
-		}
-	}
+var radius = 50;
+for (var i = 0, l = ballPositions.length; i < l; i++) {
 	var circlePath = new Path.Circle({
-        center: event.point,
+        center: ballPositions[i],
         fillColor: 'white',
 		radius: 50
 	});
 	circlePaths.push(circlePath);
-	var text = new PointText(event.point);
-
-	text.content = distances.toString();
-	text.style = {
-		fontFamily: 'Courier New',
-		fontWeight: 'bold',
-		fontSize: 20,
-		fillColor: 'red',
-		justification: 'center'
-	};
 }
 
-// Bonding
+var largeCircle = new Path.Circle({
+    center: [676, 433],
+    fillColor: 'black',
+	radius: 100
+});
+circlePaths.push(largeCircle);
+
+function onMouseMove(event) {
+	largeCircle.position = event.point;
+	generateConnections(circlePaths);
+}
 
 var connections = new Group();
 function generateConnections(paths) {
@@ -70,7 +48,7 @@ function generateConnections(paths) {
 
 	for (var i = 0, l = paths.length; i < l; i++) {
 		for (var j = i - 1; j >= 0; j--) {
-			var path = metaball(paths[i], paths[j], 0.5, 2.0, 300);
+			var path = metaball(paths[i], paths[j], 0.5, handle_len_rate, 300);
 			if (path) {
 				connections.appendTop(path);
 				path.removeOnMove();
@@ -80,11 +58,6 @@ function generateConnections(paths) {
 }
 
 generateConnections(circlePaths);
-
-function bondstrenghcolor(d){
-	var red = ((255*(d/300))).toString(16)
-	return red.slice(0,2)+'1111'
-}
 
 // ---------------------------------------------
 function metaball(ball1, ball2, v, handle_len_rate, maxDistance) {
@@ -136,10 +109,8 @@ function metaball(ball1, ball2, v, handle_len_rate, maxDistance) {
 	var path = new Path({
 		segments: [p1a, p2a, p2b, p1b],
 		style: ball1.style,
-		fillColor: '#'+bondstrenghcolor(d),
 		closed: true
 	});
-
 	var segments = path.segments;
 	segments[0].handleOut = getVector(angle1a - pi2, radius1);
 	segments[1].handleIn = getVector(angle2a + pi2, radius2);
