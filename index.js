@@ -25,12 +25,13 @@ app.get('/toy', function(req, res) {
     res.sendFile(__dirname + '/public/toy.html');
 });
 
-app.get('*', function(req, res) {
-    res.status(404).sendFile(__dirname + '/public/404.html');
+app.get('/team/wilson', function(req, res) {
+    res.sendFile(__dirname + '/public/team/index.html');
 });
 
-app.get('/wilson', function(req, res) {
-    res.sendFile(__dirname + '/public/team/index.html');
+
+app.get('*', function(req, res) {
+    res.status(404).sendFile(__dirname + '/public/404.html');
 });
 
 http.createServer(httpApp).listen(httpApp.get('port'), function() {
